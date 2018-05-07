@@ -5,19 +5,22 @@ pipeline {
   }
   stages {
     stage('start') {
-      try {
         agent any
         steps {
-  //        build (job: 'start_job', propagate: true)
-  //        build job: 'start_job'
-        sh '''set +e
+          script {
 
-  ssh root@$target_cluster -t "pytest -s /var/Nightswatch/jenkins_pipeline_tests/start.py" '''
-        currentBuild.result = 'SUCCESS'
+            try {
+    //        build (job: 'start_job', propagate: true)
+    //        build job: 'start_job'
+              sh '''set +e
+
+        ssh root@$target_cluster -t "pytest -s /var/Nightswatch/jenkins_pipeline_tests/start.py" '''
+              currentBuild.result = 'SUCCESS'
+            } catch(e) {
+              currentBuild.result = "FAILURE"
+            }
         }
       }
-    } catch(e) {
-      currentBuild.result = "FAILURE"
     }
 
     stage('print_target_cluster') {

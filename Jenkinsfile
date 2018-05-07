@@ -4,9 +4,8 @@ pipeline {
     target_cluster = '10.65.182.142'
   }
   stages {
-    try {
-
-      stage('start') {
+    stage('start') {
+      try {
         agent any
         steps {
   //        build (job: 'start_job', propagate: true)

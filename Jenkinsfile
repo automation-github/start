@@ -8,7 +8,10 @@ pipeline {
       agent any
       steps {
 //        build (job: 'start_job', propagate: true)
-        build job: 'start_job'
+//        build job: 'start_job'
+      sh '''set +e
+
+ssh root@$target_cluster -t "pytest -s /var/Nightswatch/jenkins_pipeline_tests/start.py" '''
       }
     }
 
